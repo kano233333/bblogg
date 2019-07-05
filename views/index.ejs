@@ -1,0 +1,12 @@
+<%-include('./components/header',{title:title}) %>
+<div class="main">
+  <div class="upper">
+    <h1><%= title %></h1>
+    <ul>
+      <% Object.keys(nav).forEach(function(key){ %>
+      <a href="<%= nav[key].link %>"><%= key %></a>
+      <% }) %>
+    </ul>
+  </div>
+</div>
+<%-include('./components/footer') %>

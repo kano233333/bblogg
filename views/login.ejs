@@ -1,0 +1,66 @@
+<%-include('./components/header',{title:title}) %>
+<div class="main">
+  <div class="upper">
+    <h1><%= title %></h1>
+  </div>
+  <div class="form not_login">
+    <p>
+      用户名：
+      <input id="username" placeholder="" type="text" />
+    </p>
+    <p>
+      密码：
+      <input id="psd" type="password" placeholder="" />
+    </p>
+    <button id="btn">确定</button>
+  </div>
+  <div class="logined">
+    <button class="btn" id="login_out">退出登录</button>
+  </div>
+</div>
+<%-include('./components/footer') %>
+
+<script>
+  var btn = document.getElementById('btn');
+  var username = document.getElementById('username');
+  var psd = document.getElementById('psd');
+  btn.onclick = () => {
+    var _data = {
+      username: username.value,
+      psd: psd.value
+    };
+    if(isValueEmpty(_data.username)){
+      alert('0');
+      return;
+    }
+    if(isValueEmpty(_data.psd)){
+      alert('0');
+      return;
+    }
+    ajax({
+      url: '/api/login',
+      method: "post",
+      data: _data,
+      success: (res) => {
+        if(res.static==1){
+          console.log('登录成功');
+          username.value = '';
+          psd.value = '';
+
+          let c_data = {
+            username: _data.username,
+            email: res.email || -1
+          };
+          setCookie('user', JSON.stringify(c_data), 600);
+        }else{
+          console.log('登录失败');
+        }
+      }
+    })
+  }
+  var loginShow = function(){
+    var user = getCookie('user');
+    console.log(JSON.parse(user))
+  }
+  loginShow();
+</script>

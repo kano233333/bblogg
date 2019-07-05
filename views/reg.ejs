@@ -1,0 +1,76 @@
+<%-include('./components/header',{title:title}) %>
+<div class="main">
+  <div class="upper">
+    <h1><%= title %></h1>
+  </div>
+  <div class="form">
+    <p>
+      用户名：
+      <input id="username" placeholder="" type="text" />
+    </p>
+    <p>
+      邮箱：
+      <input id="email" placeholder="" type="text" />
+    </p>
+    <p>
+      密码：
+      <input id="psd" type="password" placeholder="" />
+    </p>
+    <button id="btn">确定</button>
+  </div>
+</div>
+<%-include('./components/footer') %>
+
+<script>
+  var btn = document.getElementById('btn');
+  var username = document.getElementById('username');
+  var psd = document.getElementById('psd');
+  var email = document.getElementById('email');
+  function RegForm(reg){
+    this.username = reg.username;
+    this.password = reg.password;
+    this.email = reg.email;
+  }
+  RegForm.prototype.sub = function(){
+    if(isValueEmpty(this.username)){
+      alert('0');
+      return;
+    }
+    if(isValueEmpty(this.password)){
+      alert('0');
+      return;
+    }
+    if(isValueEmpty(this.email)){
+      alert('0');
+      return;
+    }
+    ajax({
+      url: '/api/reg',
+      method: "post",
+      data: {
+        username: this.username,
+        password: this.password,
+        email: this.email
+      },
+      success: (res) => {
+        if(res.static==1){
+          console.log('成功，请登陆');
+          username.value = '';
+          psd.value = '';
+          email.value = '';
+        }else{
+          console.log('注册失败，请重试');
+        }
+      }
+    })
+  }
+
+  btn.onclick = function(){
+    var user = new RegForm({
+      username: username.value,
+      password: psd.value,
+      email: email.value
+    });
+    user.sub();
+  }
+</script>

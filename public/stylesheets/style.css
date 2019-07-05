@@ -1,0 +1,44 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+header {
+  background-color: #484848;
+}
+header>p {
+  padding:15px 0;
+  color:#fff;
+  font-size:18px;
+}
+
+.main {
+  margin:30px 150px;
+}
+
+.form>p {
+  margin: 20px;
+  font-size:18px;
+}
+
+.form button,.btn {
+  background-color: #333333;
+  color:#fff;
+  border:none;
+  outline:none;
+  padding:5px 15px;
+  font-size:15px;
+  cursor:pointer;
+  transition:0.3s all;
+}
+
+.form button:hover {
+  box-shadow: 0 0 1px #000;
+}
