@@ -11,4 +11,4 @@
 
 - [ ] node实现apache
 - [ ] pm2工作原理
-- [ ] mongodb在服务器的配置
+- [x] mongodb在服务器的配置
