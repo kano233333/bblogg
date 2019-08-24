@@ -59,10 +59,13 @@ var newEle = [
   }
 ]
 
-var dom = document.getElementById('container');
-var a = new Element(oldEle);
-a.render(dom);
+// var dom = document.getElementById('container');
+// var a = new Element(oldEle);
+// a.render(dom);
+//
+// setTimeout(()=>{
+//   a.refresh(oldEle,newEle);
+// },3000)
 
-setTimeout(()=>{
-  a.refresh(oldEle,newEle);
-},3000)
+var patch = require('./lib/patch');
+console.log(patch)

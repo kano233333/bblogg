@@ -87,11 +87,11 @@ let delCookie = (name) => {
     document.cookie= name + "="+cval+";expires="+exp.toGMTString();
 }
 
-_type = function (obj) {
+let _type = function (obj) {
   return Object.prototype.toString.call(obj).replace(/\[object\s|\]/g, '')
 }
 
-_isString = function isString (list) {
+let _isString = function isString (list) {
   return _type(list) === 'String'
 }
 
@@ -216,6 +216,7 @@ class Element {
     this.element.map((item,index)=>{
       let createEle = this.createEle(item);
       dom.appendChild(createEle);
+      console.log('sss')
     })
   }
 }
