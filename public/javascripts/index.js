@@ -67,5 +67,5 @@ var newEle = [
 //   a.refresh(oldEle,newEle);
 // },3000)
 
-var patch = require('./lib/patch');
+var patch = require('./const.js');
 console.log(patch)

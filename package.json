@@ -9,7 +9,6 @@
     "connect-mongo": "^2.0.3",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
-    "ejs": "~2.6.1",
     "express": "~4.16.1",
     "express-session": "^1.16.1",
     "http-errors": "~1.6.3",
@@ -19,11 +18,16 @@
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-preset-es2015": "^6.24.1",
+    "babelify": "^8.0.0",
     "browser-sync": "^2.26.7",
+    "browserify": "^16.5.0",
+    "ejs": "~2.6.1",
+    "globby": "^10.0.1",
     "gulp": "^4.0.2",
-    "gulp-babel": "^7.0.1",
     "gulp-connect": "^5.7.0",
     "gulp-nodemon": "^2.4.2",
-    "gulp-sass": "^4.0.2"
+    "gulp-sass": "^4.0.2",
+    "vinyl-buffer": "^1.0.1",
+    "vinyl-source-stream": "^2.0.0"
   }
 }

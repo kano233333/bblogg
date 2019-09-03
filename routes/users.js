@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var func = require('../public/javascripts/user');
 var db = require('../models/db')
 
 router.get('/', function(req, res, next) {

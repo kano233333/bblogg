@@ -2,8 +2,11 @@ var gulp = require('gulp');
 var browserSync= require('browser-sync');
 var reload = browserSync.reload;
 var nodemon = require('gulp-nodemon');
-var babel = require('gulp-babel');
-// var connect = require('gulp-connect');
+var babelify = require('babelify');
+var browserify = require('browserify');
+var source = require('vinyl-source-stream');
+var buffer = require('vinyl-buffer');
+var globby = require('globby');
 var sass = require('gulp-sass');
 
 gulp.task('node',function(){
@@ -22,17 +25,31 @@ gulp.task('node',function(){
 gulp.task('watch', function() {
   return new Promise((res, req)=>{
     var files = ["/views/*.*", "/views/*", "public/stylesheet/*.","routes/*.*"];
-    gulp.watch(files).on("change", gulp.series('reload'));
-    gulp.watch("./public/javascripts", gulp.series('babel-js', 'reload'));
+    gulp.watch(files).on("change", browserSync.reload);
+    gulp.watch("./public/javascripts", gulp.series('build-js', 'reload'));
     gulp.watch("./public/stylesheets", gulp.series('sass', 'reload'));
     res();
   })
 })
 
-gulp.task('babel-js', function() {
-  return gulp.src(['./public/javascripts/*.js'])
-    .pipe(babel())
-    .pipe(gulp.dest("dist/javascripts"));
+gulp.task('build-js', function(){
+  return new Promise((res,req)=>{
+    globby('./public/javascripts/*.js').then((files)=>{
+      files.map((file)=>{
+        let arr = file.split('/');
+        let fileName = arr[arr.length-1];
+        browserify({
+          entries: file,
+          transform: [[babelify, {presets: ["es2015"]}]]
+        })
+        .bundle()
+        .pipe(source(fileName))
+        .pipe(buffer())
+        .pipe(gulp.dest('dist/javascripts'))
+      })
+    })
+    res();
+  })
 })
 
 gulp.task('sass', function(){
@@ -42,10 +59,10 @@ gulp.task('sass', function(){
 })
 
 gulp.task('reload', function(){
-  // return new Promise((res,req)=>{
-  //   gulp.src('')
-  // })
-  return reload;
+  return new Promise((res, req)=>{
+    reload();
+    res();
+  })
 })
 
-gulp.task('default', gulp.series('babel-js','sass' ,'node', 'watch'));
+gulp.task('default', gulp.series('build-js','sass' ,'node', 'watch'));
