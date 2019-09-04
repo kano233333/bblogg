@@ -1,6 +1,4 @@
 var gulp = require('gulp');
-var browserSync= require('browser-sync');
-var reload = browserSync.reload;
 var nodemon = require('gulp-nodemon');
 var babelify = require('babelify');
 var browserify = require('browserify');
@@ -25,9 +23,9 @@ gulp.task('node',function(){
 gulp.task('watch', function() {
   return new Promise((res, req)=>{
     var files = ["/views/*.*", "/views/*", "public/stylesheet/*.","routes/*.*"];
-    gulp.watch(files).on("change", browserSync.reload);
-    gulp.watch("./public/javascripts", gulp.series('build-js', 'reload'));
-    gulp.watch("./public/stylesheets", gulp.series('sass', 'reload'));
+    // gulp.watch(files).on("change", function(){});
+    gulp.watch("./public/javascripts", gulp.series('build-js'));
+    gulp.watch("./public/stylesheets", gulp.series('sass'));
     res();
   })
 })
@@ -57,12 +55,4 @@ gulp.task('sass', function(){
     .pipe(sass())
     .pipe(gulp.dest("dist/stylesheets"));
 })
-
-gulp.task('reload', function(){
-  return new Promise((res, req)=>{
-    reload();
-    res();
-  })
-})
-
 gulp.task('default', gulp.series('build-js','sass' ,'node', 'watch'));

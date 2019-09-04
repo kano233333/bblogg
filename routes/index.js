@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var constData = require('../public/javascripts/const.js');
+// var constData = require('../public/javascripts/const.js');
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index');

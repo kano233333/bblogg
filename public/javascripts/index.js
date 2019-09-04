@@ -1,3 +1,4 @@
+import { Element } from './lib/common'
 // var element = [
 //   {
 //     tagName:'ul',
@@ -59,13 +60,10 @@ var newEle = [
   }
 ]
 
-// var dom = document.getElementById('container');
-// var a = new Element(oldEle);
-// a.render(dom);
-//
-// setTimeout(()=>{
-//   a.refresh(oldEle,newEle);
-// },3000)
+var dom = document.getElementById('container');
+var a = new Element(oldEle);
+a.render(dom);
 
-var patch = require('./const.js');
-console.log(patch)
+setTimeout(()=>{
+  a.refresh(oldEle,newEle);
+},3000)

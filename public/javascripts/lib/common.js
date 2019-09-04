@@ -220,4 +220,7 @@ class Element {
     })
   }
 }
+
+export {isFormData, isObject, ajax, setCookie, getCookie, delCookie, Element}
+
 //8.19：只能一层，我想想。。好像留了一堆坑
