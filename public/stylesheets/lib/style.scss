@@ -1,6 +1,8 @@
+@import './const';
 * {
   padding: 0;
   margin: 0;
+  transition: 0.3s all;
 }
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
@@ -35,10 +37,41 @@ header>p {
   outline:none;
   padding:5px 15px;
   font-size:15px;
-  cursor:pointer;
+  cursor: pointer;
   transition:0.3s all;
 }
 
 .form button:hover {
   box-shadow: 0 0 1px #000;
+}
+
+.full-screen {
+  width: 100vw;
+  height: 100vh;
+  font-size: 0;
+}
+
+//background-color
+@each $key,$value in $color-list {
+  .bg-#{$key} {
+    background-color: $value;
+  }
+}
+
+//center
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+//reset
+button, input {
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+
+button:hover, input:hover {
+  box-shadow: 0 0 3px #fff;
 }

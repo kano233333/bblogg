@@ -40,3 +40,6 @@
 
 - 到底用 markdown 还是 html 还是直接就是 文字 嘞:astonished:
 
+> 好了，还是markdown吧，还是得用插件转。。。后面再看能不能改json+虚拟dom吧
+
+- 多页面好像把我坑死了，但是express路由就配不了了呀:astonished:难怪官方要用html的模板语

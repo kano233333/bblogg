@@ -1,69 +1,39 @@
 import { Element } from './lib/common'
-// var element = [
-//   {
-//     tagName:'ul',
-//     props:{
-//       class:'box'
-//     },
-//     children:[
-//       {
-//         tagName: 'li',
-//         children: ['item1'],
-//         event:{
-//           click:function a(){
-//             alert('sss')
-//           }
-//         }
-//       },
-//       {
-//         tagName: 'li',
-//         children: ['item2']
-//       },
-//       {
-//         tagName: 'li',
-//         children: ['item3']
-//       }
-//     ]
-//   }
-// ]
 
-var oldEle = [
+let mainEle = [
   {
-    tagName:'h1',
-    children:['aaaa']
-  },
-  {
-    tagName:'h2',
-    children: ['bbbb']
-  },
-  {
-    tagName: 'h3',
-    children: ['cccc']
-  }
-];
-
-var newEle = [
-  {
-    tagName:'h1',
-    children:['aaaa']
-  },
-  {
-    tagName:'h1',
-    children: ['bbbb']
-  },
-  {
-    tagName: 'h3',
-    props:{
-      class: 'aaa'
+    tagName: 'div',
+    props: {
+      class: 'box'
     },
-    children: ['dddd']
+    children:　[
+      {
+        tagName: 'p',
+        children: ['blog']
+      },
+      {
+        tagName: 'button',
+        children: ['click'],
+        events: {
+          click: function(){
+            console.log('sss');
+            window.location.href = '/essayTimeList';
+          }
+        }
+      }
+    ]
   }
 ]
 
-var dom = document.getElementById('container');
-var a = new Element(oldEle);
-a.render(dom);
+let wrapEle = [
+  {
+    tagName:'div',
+    props:{
+      class:'full-screen bg-primary center'
+    },
+    children:　mainEle
+  }
+]
 
-setTimeout(()=>{
-  a.refresh(oldEle,newEle);
-},3000)
+var ele = new Element(wrapEle);
+ele.render(document.getElementById('container'));

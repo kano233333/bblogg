@@ -14,7 +14,7 @@ router.get('/essayTagList', function(req, res, next) {
   res.render('essayTagList');
 });
 
-router.get('/essayDetail', function(req, res, next) {
+router.get(/essayDetail/, function(req, res, next) {
   res.render('essayDetail');
 });
 

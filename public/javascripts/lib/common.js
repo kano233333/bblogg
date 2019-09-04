@@ -107,20 +107,18 @@ class Element {
     if(typeof item == 'string'){
       createEle = document.createTextNode(item);
     }else{
-      let tagName = item.tagName;
-      let props = item.props;
+      let tagName = item.tagName || 'div';
+      let props = item.props || [];
       let children = item.children || [];
-      let event = item.event || {};
-      createEle = document.createElement(item.tagName);
+      let events = item.events || {};
+      let innerHtml = item.innerHTML || {}; 
+      createEle = document.createElement(tagName);
       createEle = this.setAttr(props,createEle);
-
+      createEle = this.setEvent(events,createEle);
+      createEle.insertAdjacentHTML(innerHtml.position || 'afterbegin', innerHtml.content || '');
       for(let child in children){
         let ele = this.createEle(children[child]);
         createEle.appendChild(ele);
-      }
-
-      for(let e in event){
-        createEle.addEventListener(e, event[e]);
       }
     }
     return createEle;
@@ -129,6 +127,13 @@ class Element {
   setAttr(props,createEle){
     for(let prop in props){
       createEle.setAttribute(prop, props[prop]);
+    }
+    return createEle;
+  }
+
+  setEvent(events,createEle){
+    for(let event in events){
+      createEle.addEventListener(event,events[event]);
     }
     return createEle;
   }
@@ -216,7 +221,6 @@ class Element {
     this.element.map((item,index)=>{
       let createEle = this.createEle(item);
       dom.appendChild(createEle);
-      console.log('sss')
     })
   }
 }
@@ -224,3 +228,4 @@ class Element {
 export {isFormData, isObject, ajax, setCookie, getCookie, delCookie, Element}
 
 //8.19：只能一层，我想想。。好像留了一堆坑
+//9.5:虚拟dom改变部分。emmm...一个节点遍历的时候同时更新吧，后面再说吧
