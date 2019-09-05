@@ -16,6 +16,10 @@ const nav = [
   {
     name:'作品标签',
     link: '/wordsTagList'
+  },
+  {
+    name:'在线编辑',
+    link:'/edit'
   }
 ];
 

@@ -26,4 +26,8 @@ router.get('/wordsTimeList', function(req, res, next) {
   res.render('wordsTimeList');
 });
 
+router.get('/edit', function(req, res, next){
+  res.render('edit');
+});
+
 module.exports = router;
