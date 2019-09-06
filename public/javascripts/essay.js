@@ -109,5 +109,16 @@ let mainEle = [
   }
 ];
 
-let ele = new Element(mainEle);
-ele.render(document.getElementById('container'));
+class EssayDetail extends Element {
+  constructor(props){
+    super(props)
+    this.rootDOM = props
+    this.renderer()
+  }
+  renderer(){
+    this.element = mainEle
+    this.render(this.rootDOM)
+  }
+}
+
+new EssayDetail(document.getElementById('container'));

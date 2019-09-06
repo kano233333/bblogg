@@ -2,68 +2,67 @@ import { Element, ajax } from './lib/common'
 import { markdown } from 'markdown'
 let md_content = "## Hello.\n\n* This is markdown.\n* It is fun\n* Love it or leave it."
 let html_content = markdown.toHTML( md_content );
-let aaa = '';
-let mainE = [
-  {
-    tagName:'div',
-    children:[
+
+class Edit extends Element {
+  constructor(props){
+    super(props)
+    this.rootDOM = props
+    this.data = {
+      content:'## Hello'
+    }
+    this.renderer()
+  }
+
+  getInput(val){
+    this.data.content = val.target.value
+    this.renderer()
+  }
+
+  renderer(){
+    let mainE = [
       {
-        tagName: 'p',
-        children:['标题']
-      },
-      {
-        tagName:'textarea',
-        events:{
-          input: function(val){
-            aaa = this.value;
+        tagName:'div',
+        children:[
+          {
+            tagName: 'p',
+            children:['标题']
+          },
+          {
+            tagName:'textarea',
+            events:{
+              input: this.getInput.bind(this)
+            }
+          },
+          {
+            tagName: 'div',
+            innerHTML: {
+              position: 'afterbegin',
+              content: markdown.toHTML(this.data.content)
+            }
           }
-        }
-      },
-      {
-        tagName: 'div',
-        children: [markdown.toHTML(aaa)]
+        ]
       }
     ]
-  }
-]
 
-let e = [
-  {
-    tagName: 'div',
-    children: [
-      {
-        tagName: 'h2',
-        children: ['在线编辑']
-      },
+    let e = [
       {
         tagName: 'div',
-        children: mainE
+        children: [
+          {
+            tagName: 'h2',
+            children: ['在线编辑']
+          },
+          {
+            tagName: 'div',
+            children: mainE
+          }
+        ]
       }
     ]
+
+    this.element = e
+    this.render(this.rootDOM)
   }
-];
+}
 
-let ele = new Element(e);
-ele.render(document.getElementById('container'));
-
-setTimeout(()=>{
-  ele = new Element(e);
-  ele.render(document.getElementById('container'));
-},3000)
-
-// ajax({
-//   url: '/api/sendEssay',
-//   data:{
-//     title: 'bbb',
-//     time: '2019-3-4',
-//     tag: ['js', 'vue'],
-//     content:'bbbbbbbbbbbbbbbbbbbbb'
-//   },
-//   method:'POST',
-//   success:function(res){
-//     console.log(res)
-//   },
-//   error: function(err){
-//     console.log(err)
-//   }
-// })
+new Edit(document.getElementById('container'));

@@ -34,6 +34,16 @@ let wrapEle = [
     children:　mainEle
   }
 ]
+class EssayDetail extends Element {
+  constructor(props){
+    super(props)
+    this.rootDOM = props
+    this.renderer()
+  }
+  renderer(){
+    this.element = wrapEle
+    this.render(this.rootDOM)
+  }
+}
 
-var ele = new Element(wrapEle);
-ele.render(document.getElementById('container'));
+new EssayDetail(document.getElementById('container'));
