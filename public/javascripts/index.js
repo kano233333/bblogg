@@ -36,7 +36,7 @@ let wrapEle = [
 ]
 class EssayDetail extends Element {
   constructor(props){
-    super(props)
+    super(props) 
     this.rootDOM = props
     this.renderer()
   }

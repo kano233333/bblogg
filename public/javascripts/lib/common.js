@@ -138,82 +138,50 @@ class Element {
     return createEle;
   }
 
-  //没有考虑顺序替换情况（太难想了...） 全部都replace 后面再说吧
-  diffNode(oldNode, newNode){
+  diff(oldNode, newNode, dom){
     let oldLen = oldNode.length;
     let newLen = newNode.length;
-    let len = oldLen>oldLen ? oldLen : oldLen;
-    let difference = [];
-    for(let i =0;i<len;i++){
-      if( oldNode[i].tagName !== newNode[i].tagName ){
-        difference.push({
-          type:'_replace',
-          // tagName: newNode[i].tagName
-          node: newNode[i]
-        })
-      }else {//非全部替换
-        if( oldNode[i].props !== newNode[i].props ){
-          difference.push({
-            type: '_props',
-            props: this.diffProps(oldNode[i].props, newNode[i].props)
-          })
+    if(oldLen == newLen){
+      newNode.map((item, index)=>{
+        if(_isString(item) && _isString(oldNode[index]) && item!==oldNode[index]){
+          this.diffRefresh('_text', dom, index, item);
+        }else if(item.tagName !== oldNode[index].tagName){
+          this.diffRefresh('_replace', dom, index, item);
+        }else if(item.props !== oldNode[index].props){
+          this.diffRefresh('_props', dom, index, item);
+        }else if(item.innerHTML && oldNode[index].innerHTML && item.innerHTML.content!==oldNode[index].innerHTML.content){
+          this.diffRefresh('_innerHTML', dom, index, item);
         }
-
-        if(
-          //children[0]要改
-          _isString(oldNode[i].children[0]) &&
-          _isString(newNode[i].children[0]) &&
-          oldNode[i].children[0] !== newNode[i].children[0]
-        ){
-          difference.push({
-            type: '_text',
-            children: newNode[i].children
-          })
+        let oldChild = oldNode[index].children || [];
+        let newChild = item.children || [];
+        let domChild = oldChild == [] ? dom : dom.childNodes[index];
+        if(oldChild!==[] || newChild!==[]){
+          this.diff(oldChild, newChild, domChild);
         }
-      }
+      })
     }
-    console.log(difference);
-    return difference;
   }
 
-  //没有考虑 删除
-  diffProps(oldProps, newProps){
-    let diffProps = [];
-    if(oldProps === undefined){
-      return newProps;
+  diffRefresh(type, dom, index, change){
+    switch(type){
+      case '_replace':
+        dom.removeChild(dom.childNodes[index]);
+        dom.appendChild(this.createEle(change));
+        break;
+      case '_props':
+        // this.setAttr(item.props, this.dom.childNodes[2])
+        break;
+      case '_text':
+        if(_isString(dom.innerText)){
+          dom.innerText = change;
+        }else{
+          dom.childNodes[index] = change;
+        }
+        break;
+      case '_innerHTML':
+        dom.childNodes[index].innerHTML = change.innerHTML.content;
+        break;
     }
-    for(let props in newProps){
-      if(oldProps[props] === undefined){
-        diffProps.push({
-          [props]: newProps[props]
-        })
-      }else if(oldProps[props] !== newProps[props]){
-        diffProps.push({
-          [props]: newProps[props]
-        })
-      }
-    }
-    return diffProps;
-  }
-
-  refresh(oldEle, newEle){//好像必须要加标记。。。
-    let difference = this.diffNode(oldEle,newEle);
-    difference.map((item, index)=>{
-      switch (item.type) {
-        case '_replace':
-          this.dom.removeChild(this.dom.childNodes[1]);
-          this.dom.appendChild(this.createEle(item.node));
-          break;
-        case '_props':
-          this.setAttr(item.props, this.dom.childNodes[2])
-          break;
-        case '_text':
-          this.dom.childNodes[2].innerText = item.children[0]
-          break;
-        default:
-
-      }
-    })
   }
 
   render(dom){

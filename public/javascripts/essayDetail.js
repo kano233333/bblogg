@@ -1,8 +1,8 @@
-import {markdown} from 'markdown'
 import {Element} from './lib/common'
-let md_content = "## Hello.\n\n* This is markdown.\n* It is fun\n* Love it or leave it."
-let html_content = markdown.toHTML( md_content );
+import { default as markdown } from 'markdown-it'
+import * as highlight from 'highlightjs'
 
+let md = new markdown();
 class EssayDetail extends Element {
   constructor(props){
     super(props)
@@ -15,7 +15,7 @@ class EssayDetail extends Element {
         tagName: 'div',
         innerHTML: {
           position: 'afterbegin',
-          content: html_content
+          content: md.render('## hello')
         }
       }
     ]

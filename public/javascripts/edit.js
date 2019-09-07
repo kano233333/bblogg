@@ -1,7 +1,16 @@
 import { Element, ajax } from './lib/common'
-import { markdown } from 'markdown'
-let md_content = "## Hello.\n\n* This is markdown.\n* It is fun\n* Love it or leave it."
-let html_content = markdown.toHTML( md_content );
+import { default as markdown } from 'markdown-it'
+import * as hljs from 'highlightjs'
+let md = new markdown({
+  highlight: function (str, lang) {
+    if (lang && hljs.getLanguage(lang)) {
+      try {
+        return hljs.highlight(lang, str).value;
+      } catch (__) {}
+    }
+    return '';
+  }
+})
 
 class Edit extends Element {
   constructor(props){
@@ -15,10 +24,18 @@ class Edit extends Element {
 
   getInput(val){
     this.data.content = val.target.value
-    this.renderer()
+    // console.log(this.element)
+    let oldTree = this.element;
+    this.setElement();
+    let newTree = this.element;
+    this.diff(oldTree, newTree, this.dom);
   }
 
-  renderer(){
+  setState(){
+
+  }
+
+  setElement(){
     let mainE = [
       {
         tagName:'div',
@@ -37,7 +54,7 @@ class Edit extends Element {
             tagName: 'div',
             innerHTML: {
               position: 'afterbegin',
-              content: markdown.toHTML(this.data.content)
+              content: md.render(this.data.content)
             }
           }
         ]
@@ -61,6 +78,10 @@ class Edit extends Element {
     ]
 
     this.element = e
+  }
+
+  renderer(){
+    this.setElement();
     this.render(this.rootDOM)
   }
 }
