@@ -5,7 +5,11 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
 */
 pre {
   background-color: #fdf6e3;
-  padding: 5px;
+  padding: 10px;
+  line-height: 1.5;
+  margin: 20px 0;
+  box-shadow: 0 0 2px #999;
+  border-radius: 4px;
 }
 .hljs {
   display: block;

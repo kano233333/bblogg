@@ -12,72 +12,112 @@ let md = new markdown({
   }
 })
 
+const styleTop = 'top: -20px; z-index:3;';
+const styleBottom =  'top: 20px;';
+
 class Edit extends Element {
   constructor(props){
     super(props)
     this.rootDOM = props
     this.data = {
-      content:'## Hello'
+      content:'',
+      styleTop: styleTop,
+      styleBottom: styleBottom
     }
     this.renderer()
   }
 
   getInput(val){
     this.data.content = val.target.value
-    // console.log(this.element)
+    this.setState();
+  }
+
+  setState(){
     let oldTree = this.element;
     this.setElement();
     let newTree = this.element;
     this.diff(oldTree, newTree, this.dom);
   }
 
-  setState(){
-
-  }
-
   setElement(){
-    let mainE = [
+    let header = [
       {
         tagName:'div',
+        props: {
+          class: 'edit-header'
+        },
         children:[
           {
-            tagName: 'p',
-            children:['标题']
+            tagName:'p',
+            children:['在线编辑']
           },
           {
-            tagName:'textarea',
-            events:{
-              input: this.getInput.bind(this)
-            }
-          },
-          {
-            tagName: 'div',
-            innerHTML: {
-              position: 'afterbegin',
-              content: md.render(this.data.content)
-            }
+            tagName:'button',
+            children: ['添加']
           }
         ]
       }
-    ]
-
-    let e = [
+    ];
+    let edit_wrap = [
       {
         tagName: 'div',
-        children: [
+        props: {
+          class: 'edit-wrap'
+        },
+        children:[
           {
-            tagName: 'h2',
-            children: ['在线编辑']
+            tageName:'div',
+            props: {
+              class:'edit-box edit-box-left',
+              style: this.data.styleBottom
+            },
+            events: {
+              click:function(){
+                this.data.styleTop = styleBottom;
+                this.data.styleBottom = styleTop;
+                this.setState();
+              }.bind(this)
+            },
+            children:[
+              {
+                tagName:'div',
+                props:{
+                  class: 'box'
+                },
+                innerHTML:{
+                  position: 'afterbegin',
+                  content:md.render(this.data.content)
+                }
+              }
+            ]
           },
           {
-            tagName: 'div',
-            children: mainE
+            tageName:'div',
+            props: {
+              class:'edit-box edit-box-right',
+              style: this.data.styleTop
+            },
+            events: {
+              click:function(){
+                this.data.styleTop = styleTop;
+                this.data.styleBottom = styleBottom;
+                this.setState();
+              }.bind(this)
+            },
+            children: [
+              {
+                tagName: 'textarea',
+                events: {
+                  input: this.getInput.bind(this)
+                }
+              }
+            ]
           }
         ]
       }
-    ]
-
-    this.element = e
+    ];
+    let e = [...header, ...edit_wrap];
+    this.element = e; 
   }
 
   renderer(){

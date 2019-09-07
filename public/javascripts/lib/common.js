@@ -145,11 +145,14 @@ class Element {
       newNode.map((item, index)=>{
         if(_isString(item) && _isString(oldNode[index]) && item!==oldNode[index]){
           this.diffRefresh('_text', dom, index, item);
-        }else if(item.tagName !== oldNode[index].tagName){
+        }
+        if(item.tagName !== oldNode[index].tagName){
           this.diffRefresh('_replace', dom, index, item);
-        }else if(item.props !== oldNode[index].props){
+        }
+        if(item.props !== oldNode[index].props){
           this.diffRefresh('_props', dom, index, item);
-        }else if(item.innerHTML && oldNode[index].innerHTML && item.innerHTML.content!==oldNode[index].innerHTML.content){
+        }
+        if(item.innerHTML && oldNode[index].innerHTML && item.innerHTML.content!==oldNode[index].innerHTML.content){
           this.diffRefresh('_innerHTML', dom, index, item);
         }
         let oldChild = oldNode[index].children || [];
@@ -169,7 +172,7 @@ class Element {
         dom.appendChild(this.createEle(change));
         break;
       case '_props':
-        // this.setAttr(item.props, this.dom.childNodes[2])
+        this.setAttr(change.props, dom.childNodes[index])
         break;
       case '_text':
         if(_isString(dom.innerText)){
