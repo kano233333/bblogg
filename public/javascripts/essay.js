@@ -23,29 +23,6 @@ const nav = [
   }
 ];
 
-const essays = [
-  {
-    title:'aaa',
-    id:'0',
-    content:'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
-  },
-  {
-    title:'bbb',
-    id:'1',
-    content:'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'
-  },
-  {
-    title:'ccc',
-    id:'2',
-    content:'ccccccccccccccccccccccccccccccccccccccccc'
-  },
-  {
-    title:'ddd',
-    id:'3',
-    content:'ddddddddddddddddddddddddddd'
-  }
-]
-
 let liE = [];
 nav.map((item, index)=>{
   liE.push({
@@ -63,29 +40,6 @@ nav.map((item, index)=>{
 })
 
 let essayE = [];
-essays.map((item,index)=>{
-  essayE.push({
-    tagName: 'div',
-    props: {
-      class: 'essay'
-    },
-    events:{
-      click: function(){
-        window.location.href = '/essayDetail/' +item.id
-      }
-    },
-    children:[
-      {
-        tagName: 'h2',
-        children: [item.title]
-      },
-      {
-        tagName: 'p',
-        children: [item.content]
-      }
-    ]
-  })
-})
 
 let mainEle = [
   {
