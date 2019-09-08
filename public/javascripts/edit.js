@@ -22,7 +22,8 @@ class Edit extends Element {
     this.data = {
       content:'',
       styleTop: styleTop,
-      styleBottom: styleBottom
+      styleBottom: styleBottom,
+      isAlertShow: false
     }
     this.renderer()
   }
@@ -40,6 +41,67 @@ class Edit extends Element {
   }
 
   setElement(){
+    let alertBox = [
+      {
+        tagName:'div',
+        props: {
+          class: 'mask',
+          style: `display:${this.data.isAlertShow ? 'block' : 'none'}`
+        },
+        children:[
+          {
+            tagName: 'div',
+            props: {
+              class: 'alert'
+            },
+            children:[
+              {
+                tagName:'div',
+                props: {
+                  class: 'cancel ball-img'
+                },
+                events: {
+                  click: function(){
+                    this.data.isAlertShow = false;
+                    this.setState();
+                  }.bind(this)
+                }
+              },
+              {
+                tagName:'div',
+                children:[
+                  {
+                    tagName:'span',
+                    children:['标题']
+                  },
+                  {
+                    tagName:'input'
+                  }
+                ]
+              },
+              {
+                tagName:'div',
+                children:[
+                  {
+                    tagName:'span',
+                    children:['标签']
+                  },
+                  {
+                    tagName:'input'
+                  }
+                ]
+              },
+              {
+                tagName:'div',
+                props: {
+                  class: 'sure ball-img'
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ];
     let header = [
       {
         tagName:'div',
@@ -53,7 +115,13 @@ class Edit extends Element {
           },
           {
             tagName:'button',
-            children: ['添加']
+            children: ['添加'],
+            events: {
+              click: function(){
+                this.data.isAlertShow = true;
+                this.setState();
+              }.bind(this)
+            }
           }
         ]
       }
@@ -116,7 +184,7 @@ class Edit extends Element {
         ]
       }
     ];
-    let e = [...header, ...edit_wrap];
+    let e = [...header, ...edit_wrap, ...alertBox];
     this.element = e; 
   }
 

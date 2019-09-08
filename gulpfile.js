@@ -6,6 +6,7 @@ var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 var globby = require('globby');
 var sass = require('gulp-sass');
+var base64 = require('gulp-base64');
 
 gulp.task('node',function(){
   return new Promise((res, req)=>{
@@ -53,6 +54,11 @@ gulp.task('build-js', function(){
 gulp.task('sass', function(){
   return gulp.src('./public/stylesheets/*.scss')
     .pipe(sass())
+    .pipe(base64({
+      extensions:['svg','png'],
+      maxImageSize:20*1024,
+      debug:false
+    }))
     .pipe(gulp.dest("dist/stylesheets"));
 })
 gulp.task('default', gulp.series('build-js','sass' ,'node', 'watch'));

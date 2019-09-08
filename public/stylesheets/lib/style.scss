@@ -75,3 +75,14 @@ button, input, textarea {
 button:hover, input:hover {
   box-shadow: 0 0 3px #fff;
 }
+
+//...
+.mask {
+  position: fixed;
+  top:0;
+  left:0;
+  width:100vw;
+  height:100vh;
+  background-color: rgba(123,123,123,0.5);
+  z-index: 4;
+}
