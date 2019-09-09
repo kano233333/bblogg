@@ -1,8 +1,18 @@
 @import './lib/style';
 @import './lib/solarized-light';
 #container {
+  padding: 15px;
+  box-sizing: border-box;
+  background-color: $primary;
+  min-height: 100vh;
+}
+
+.essay-list-wrap {
+  width: 100%;
+  background-color:#fff;
+  box-shadow: 0 0 5px $main-deep;
   display: flex;
-  margin: 30px;
+  min-height: calc(100vh - #{30px});
 }
 
 .left {
@@ -22,3 +32,4 @@
 .essay:hover {
   background-color: #fff;
 }
+

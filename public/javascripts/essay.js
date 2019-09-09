@@ -22,55 +22,73 @@ const nav = [
     link:'/edit'
   }
 ];
-
-let liE = [];
-nav.map((item, index)=>{
-  liE.push({
-    tagName: 'li',
-    children: [
-      {
-        tagName:'a',
-        props: {
-          href: item.link
-        },
-        children:[item.name]
-      }
-    ]
-  })
-})
-
-let essayE = [];
-
-let mainEle = [
-  {
-    tagName: 'div',
-    props: {
-      class: 'left'
-    },
-    children: [
-      {
-        tagName: 'ul',
-        children: liE
-      }
-    ]
-  },
-  {
-    tagName: 'div',
-    props: {
-      class:'right'
-    },
-    children:essayE
-  }
-];
-
 class EssayDetail extends Element {
   constructor(props){
     super(props)
     this.rootDOM = props
     this.renderer()
   }
+
+  setState(){
+    let oldTree = this.element;
+    this.setElement();
+    let newTree = this.element;
+    this.diff(oldTree, newTree, this.dom);
+  }
+
+  setElement(){
+    let liE = [];
+    nav.map((item, index)=>{
+      liE.push({
+        tagName: 'li',
+        children: [
+          {
+            tagName:'a',
+            props: {
+              href: item.link
+            },
+            children:[item.name]
+          }
+        ]
+      })
+    })
+
+    let essayE = [];
+
+    let e = [
+      {
+        tagName: 'div',
+        props: {
+          class: 'essay-list-wrap'
+        },
+        children: [
+          {
+            tagName: 'div',
+            props: {
+              class: 'left'
+            },
+            children: [
+              {
+                tagName: 'ul',
+                children: liE
+              }
+            ]
+          },
+          {
+            tagName: 'div',
+            props: {
+              class:'right'
+            },
+            children:essayE
+          }
+        ]
+      }
+    ];
+    this.element = e
+  }
+
   renderer(){
-    this.element = mainEle
+    this.setElement()
     this.render(this.rootDOM)
   }
 }

@@ -76,6 +76,10 @@ button:hover, input:hover {
   box-shadow: 0 0 3px #fff;
 }
 
+li, lo {
+  list-style: none;
+}
+
 //...
 .mask {
   position: fixed;
