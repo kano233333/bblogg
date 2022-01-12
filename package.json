@@ -13,7 +13,7 @@
     "express-session": "^1.16.1",
     "highlightjs": "^9.12.0",
     "http-errors": "~1.6.3",
-    "markdown-it": "^9.1.0",
+    "markdown-it": "^12.3.2",
     "mongodb": "^2.2.33",
     "morgan": "~1.9.1"
   },
